@@ -1,15 +1,12 @@
 import requests
 
+url_api = "https://blockchain.info/ticker"
 
-url_api = "https://economia.awesomeapi.com.br/last/BTC-BRL"
-
-print("A ligar à Nuvem (AwesomeAPI) para recolher dados...")
+print("A ligar à Nuvem (Blockchain.info) para recolher dados...")
 resposta = requests.get(url_api)
-
 
 dados_brutos = resposta.json()
 
-
-preco_real = float(dados_brutos['BTCBRL']['bid'])
+preco_real = float(dados_brutos['BRL']['last'])
 
 print(f"Preço atual do Bitcoin: R$ {preco_real:,.2f}")
