@@ -24,4 +24,4 @@ jobs:
         run: pip install requests
 
       - name: 4. Executar o script de extracao!
-        run: python Missao_5.py
+        run: python "Primeiro projeto SQL/Missao_5.py"
