@@ -1,11 +1,12 @@
 name: Robo Extrator de Cotacao Diario
 
-# Quando é que o robô deve acordar?
 on:
   schedule:
-    # Executa todos os dias às 11h UTC (08h da manhã no fuso horário de Brasília)
     - cron: '0 11 * * *' 
-  workflow_dispatch: # Adiciona um botão manual no GitHub para testarmos na hora!
+  workflow_dispatch: 
+
+permissions:
+  contents: write
 
 jobs:
   executar-extracao:
@@ -18,10 +19,18 @@ jobs:
       - name: 2. Preparar o ambiente Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13' # A mesma versão que usa no seu PC
+          python-version: '3.13' 
 
       - name: 3. Instalar o nosso empregado de mesa (Requests)
         run: pip install requests
 
       - name: 4. Executar o script de extracao!
         run: python "Primeiro projeto SQL/Missao_5.py"
+
+      - name: 5. Guardar a base de dados de volta no GitHub
+        run: |
+          git config --global user.name 'Robo Extrator'
+          git config --global user.email 'robo@github.com'
+          git add banco_join.db
+          git commit -m "Automação: Nova cotação diária adicionada" || echo "Sem alterações"
+          git push  
