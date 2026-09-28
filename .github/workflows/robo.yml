@@ -1,0 +1,27 @@
+name: Robo Extrator de Cotacao Diario
+
+# Quando é que o robô deve acordar?
+on:
+  schedule:
+    # Executa todos os dias às 11h UTC (08h da manhã no fuso horário de Brasília)
+    - cron: '0 11 * * *' 
+  workflow_dispatch: # Adiciona um botão manual no GitHub para testarmos na hora!
+
+jobs:
+  executar-extracao:
+    runs-on: ubuntu-latest # A máquina virtual na nuvem do GitHub (Linux)
+
+    steps:
+      - name: 1. Puxar os nossos ficheiros do repositorio
+        uses: actions/checkout@v4
+
+      - name: 2. Preparar o ambiente Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13' # A mesma versão que usa no seu PC
+
+      - name: 3. Instalar o nosso empregado de mesa (Requests)
+        run: pip install requests
+
+      - name: 4. Executar o script de extracao!
+        run: python Missao_5.py
